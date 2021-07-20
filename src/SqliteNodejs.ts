@@ -34,9 +34,9 @@ export class SqliteNodejs implements SqliteDb {
     this.filename = filename;
   }
 
-  open(): Promise<void> {
+  async open(): Promise<void> {
     if (this.context != undefined) {
-      return Promise.resolve();
+      return;
     }
 
     const db = new SQLite(this.filename, { fileMustExist: true, readonly: true });
@@ -71,22 +71,20 @@ export class SqliteNodejs implements SqliteDb {
       idToTopic,
       topicNameToId,
     };
-    return Promise.resolve();
   }
 
-  close(): Promise<void> {
+  async close(): Promise<void> {
     if (this.context != undefined) {
       this.context.db.close();
       this.context = undefined;
     }
-    return Promise.resolve();
   }
 
-  readTopics(): Promise<TopicDefinition[]> {
+  async readTopics(): Promise<TopicDefinition[]> {
     if (this.context == undefined) {
       throw new Error(`Call open() before reading topics`);
     }
-    return Promise.resolve(Array.from(this.context.idToTopic.values()));
+    return Array.from(this.context.idToTopic.values());
   }
 
   readMessages(opts: MessageReadOptions = {}): AsyncIterableIterator<RawMessage> {
@@ -150,15 +148,15 @@ export class SqliteNodejs implements SqliteDb {
     return new RawMessageIterator(iterator, idToTopic);
   }
 
-  timeRange(): Promise<[min: Time, max: Time]> {
+  async timeRange(): Promise<[min: Time, max: Time]> {
     if (this.context == undefined) {
       throw new Error(`Call open() before retrieving the time range`);
     }
     const res = this.context.timeRangeStatement.get() as { start: bigint; end: bigint };
-    return Promise.resolve([fromNanoSec(res.start), fromNanoSec(res.end)]);
+    return [fromNanoSec(res.start), fromNanoSec(res.end)];
   }
 
-  messageCounts(): Promise<Map<string, number>> {
+  async messageCounts(): Promise<Map<string, number>> {
     if (this.context == undefined) {
       throw new Error(`Call open() before retrieving message counts`);
     }
@@ -167,6 +165,6 @@ export class SqliteNodejs implements SqliteDb {
     for (const { name, count } of rows) {
       counts.set(name, Number(count));
     }
-    return Promise.resolve(counts);
+    return counts;
   }
 }

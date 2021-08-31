@@ -94,7 +94,6 @@ export class SqliteNodejs implements SqliteDb {
     const topicNameToId = this.context.topicNameToId;
 
     // Build a SQL query and bind parameters
-    console.log("start read");
     let args: (string | bigint)[] = [];
     let query = `select topic_id,timestamp,data from messages`;
     if (opts.startTime != undefined) {

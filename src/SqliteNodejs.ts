@@ -23,7 +23,7 @@ type TopicRow = {
   name: string;
   type: string;
   serialization_format: string;
-  offered_qos_profiles: string;
+  offered_qos_profiles?: string;
 };
 
 export class SqliteNodejs implements SqliteDb {
@@ -53,12 +53,10 @@ export class SqliteNodejs implements SqliteDb {
     // Retrieve all of the topics
     const idToTopic = new Map<bigint, TopicDefinition>();
     const topicNameToId = new Map<string, bigint>();
-    const topicRows = db
-      .prepare("select id,name,type,serialization_format,offered_qos_profiles from topics")
-      .all() as TopicRow[];
+    const topicRows = db.prepare("select * from topics").all() as TopicRow[];
     for (const row of topicRows) {
       const { id, name, type, serialization_format, offered_qos_profiles } = row;
-      const offeredQosProfiles = parseQosProfiles(offered_qos_profiles);
+      const offeredQosProfiles = parseQosProfiles(offered_qos_profiles ?? "[]");
       const topic = { name, type, serializationFormat: serialization_format, offeredQosProfiles };
       idToTopic.set(id, topic);
       topicNameToId.set(name, id);
@@ -96,6 +94,7 @@ export class SqliteNodejs implements SqliteDb {
     const topicNameToId = this.context.topicNameToId;
 
     // Build a SQL query and bind parameters
+    console.log("start read");
     let args: (string | bigint)[] = [];
     let query = `select topic_id,timestamp,data from messages`;
     if (opts.startTime != undefined) {

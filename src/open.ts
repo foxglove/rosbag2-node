@@ -5,6 +5,13 @@ import path from "path";
 import { FsReader } from "./FsReader";
 import { SqliteNodejs } from "./SqliteNodejs";
 
+export async function openNodejsFile(filename: string): Promise<Rosbag2> {
+  const entries = [{ relativePath: path.basename(filename), file: new FsReader(filename) }];
+  const bag = new Rosbag2(entries, (_) => new SqliteNodejs(filename));
+  await bag.open();
+  return bag;
+}
+
 export async function openNodejsDirectory(folder: string): Promise<Rosbag2> {
   const filenames = await listFiles(folder, ".");
   const entries = filenames.map((filename) => ({
@@ -12,7 +19,6 @@ export async function openNodejsDirectory(folder: string): Promise<Rosbag2> {
     file: new FsReader(path.join(folder, filename)),
   }));
   const bag = new Rosbag2(
-    folder,
     entries,
     (fileEntry) => new SqliteNodejs(path.join(folder, fileEntry.relativePath)),
   );

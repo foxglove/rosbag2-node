@@ -1,6 +1,6 @@
 {
   "name": "@foxglove/rosbag2-node",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "ROS2 (Robot Operating System) bag reader and writer for node.js",
   "license": "MIT",
   "keywords": [

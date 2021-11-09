@@ -29,7 +29,7 @@ describe("SqliteNodejs single bag file handling", () => {
       expect(DATATYPES.includes(msg.topic.type)).toEqual(true);
       if (!seenRosout && msg.topic.name === "/rosout") {
         seenRosout = true;
-        expect(msg.data).toEqual({
+        expect(msg.value).toEqual({
           stamp: { sec: 1585866235, nsec: 112130688 },
           level: 20,
           name: "minimal_publisher",
@@ -38,9 +38,11 @@ describe("SqliteNodejs single bag file handling", () => {
           function: "operator()",
           line: 38,
         });
+        expect(msg.data.byteLength).toBe(176);
       } else if (!seenTopic && msg.topic.name === "/topic") {
         seenTopic = true;
-        expect(msg.data).toEqual({ data: "Hello, world! 0" });
+        expect(msg.value).toEqual({ data: "Hello, world! 0" });
+        expect(msg.data.byteLength).toBe(24);
       }
       prevTime = msg.timestamp;
     }
@@ -103,7 +105,7 @@ describe("SqliteNodejs single bag directory handling", () => {
       expect(DATATYPES.includes(msg.topic.type)).toEqual(true);
       if (!seenRosout && msg.topic.name === "/rosout") {
         seenRosout = true;
-        expect(msg.data).toEqual({
+        expect(msg.value).toEqual({
           stamp: { sec: 1585866235, nsec: 112130688 },
           level: 20,
           name: "minimal_publisher",
@@ -112,9 +114,11 @@ describe("SqliteNodejs single bag directory handling", () => {
           function: "operator()",
           line: 38,
         });
+        expect(msg.data.byteLength).toBe(176);
       } else if (!seenTopic && msg.topic.name === "/topic") {
         seenTopic = true;
-        expect(msg.data).toEqual({ data: "Hello, world! 0" });
+        expect(msg.value).toEqual({ data: "Hello, world! 0" });
+        expect(msg.data.byteLength).toBe(24);
       }
       prevTime = msg.timestamp;
     }

@@ -150,8 +150,11 @@ export class SqliteNodejs implements SqliteDb {
     if (this.context == undefined) {
       throw new Error(`Call open() before retrieving the time range`);
     }
-    const res = this.context.timeRangeStatement.get() as { start: bigint; end: bigint };
-    return [fromNanoSec(res.start), fromNanoSec(res.end)];
+    const res = this.context.timeRangeStatement.get() as {
+      start: bigint | null;
+      end: bigint | null;
+    };
+    return [fromNanoSec(res.start ?? 0n), fromNanoSec(res.end ?? 0n)];
   }
 
   async messageCounts(): Promise<Map<string, number>> {

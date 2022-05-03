@@ -1,8 +1,7 @@
 import { Rosbag2 } from "@foxglove/rosbag2";
-import { Time, add as addTimes, isGreaterThan, isTimeInRangeInclusive } from "@foxglove/rostime";
+import { Time, isGreaterThan, isTimeInRangeInclusive } from "@foxglove/rostime";
 import path from "path";
 
-import { SqliteNodejs } from "./SqliteNodejs";
 import { openNodejsFile, openNodejsDirectory } from "./open";
 
 const BAG_START: Time = { sec: 1585866235, nsec: 112411371 };
@@ -14,10 +13,6 @@ describe("SqliteNodejs single bag file handling", () => {
   it("reads messages", async () => {
     const bagFilename = path.join(__dirname, "..", "tests", "bags", "talker", "talker.db3");
     const bag = await openNodejsFile(bagFilename);
-
-    expect(bag.files.size).toEqual(1);
-    expect(bag.files.get("metadata.yaml")).toBeUndefined();
-    expect(bag.files.get("talker.db3")).toBeDefined();
 
     let seenRosout = false;
     let seenTopic = false;
@@ -51,8 +46,6 @@ describe("SqliteNodejs single bag file handling", () => {
   it("reads start/end times", async () => {
     const bagFilename = path.join(__dirname, "..", "tests", "bags", "talker", "talker.db3");
     const bag = await openNodejsFile(bagFilename);
-
-    expect(bag.metadata).toBeUndefined();
 
     const [startTime, endTime] = await bag.timeRange();
     expect(startTime).toEqual(BAG_START);
@@ -82,18 +75,14 @@ describe("SqliteNodejs single bag file handling", () => {
 });
 
 describe("SqliteNodejs single bag directory handling", () => {
-  it("does not fail when missing metadata.yaml", async () => {
-    const bag = new Rosbag2([], (fileEntry) => new SqliteNodejs(fileEntry.relativePath));
+  it("does not fail on an empty set", async () => {
+    const bag = new Rosbag2([]);
     await expect(bag.open()).resolves.toBeUndefined();
   });
 
   it("reads messages", async () => {
     const bagPath = path.join(__dirname, "..", "tests", "bags", "talker");
     const bag = await openNodejsDirectory(bagPath);
-
-    expect(bag.files.size).toEqual(4);
-    expect(bag.files.get("metadata.yaml")).toBeDefined();
-    expect(bag.files.get("talker.db3")).toBeDefined();
 
     let seenRosout = false;
     let seenTopic = false;
@@ -127,10 +116,6 @@ describe("SqliteNodejs single bag directory handling", () => {
   it("reads start/end times", async () => {
     const bagPath = path.join(__dirname, "..", "tests", "bags", "talker");
     const bag = await openNodejsDirectory(bagPath);
-
-    expect(bag.metadata).toBeDefined();
-    expect(bag.metadata!.startingTime).toEqual(BAG_START);
-    expect(addTimes(bag.metadata!.startingTime!, bag.metadata!.duration!)).toEqual(BAG_END);
 
     const [startTime, endTime] = await bag.timeRange();
     expect(startTime).toEqual(BAG_START);

@@ -2,26 +2,21 @@ import { Rosbag2 } from "@foxglove/rosbag2";
 import { readdir } from "fs/promises";
 import path from "path";
 
-import { FsReader } from "./FsReader";
 import { SqliteNodejs } from "./SqliteNodejs";
 
 export async function openNodejsFile(filename: string): Promise<Rosbag2> {
-  const entries = [{ relativePath: path.basename(filename), file: new FsReader(filename) }];
-  const bag = new Rosbag2(entries, (_) => new SqliteNodejs(filename));
+  const file = new SqliteNodejs(filename);
+  const bag = new Rosbag2([file]);
   await bag.open();
   return bag;
 }
 
 export async function openNodejsDirectory(folder: string): Promise<Rosbag2> {
   const filenames = await listFiles(folder, ".");
-  const entries = filenames.map((filename) => ({
-    relativePath: filename,
-    file: new FsReader(path.join(folder, filename)),
-  }));
-  const bag = new Rosbag2(
-    entries,
-    (fileEntry) => new SqliteNodejs(path.join(folder, fileEntry.relativePath)),
-  );
+  const entries = filenames
+    .filter((filename) => filename.toLowerCase().endsWith(".db3"))
+    .map((filename) => new SqliteNodejs(path.join(folder, filename)));
+  const bag = new Rosbag2(entries);
   await bag.open();
   return bag;
 }

@@ -1,18 +1,12 @@
 # @foxglove/rosbag2-node
 
-> _ROS2 (Robot Operating System) bag reader and writer for node.js 👜_
+> _ROS 2 (Robot Operating System) bag reader and writer for node.js 👜_
 
 [![npm version](https://img.shields.io/npm/v/@foxglove/rosbag2-node.svg?style=flat)](https://www.npmjs.com/package/@foxglove/rosbag2-node)
 
 ## Introduction
 
-...
-
-## Usage
-
-```Typescript
-...
-```
+`rosbag2-node` enables [Node.js](https://nodejs.org/en/) to read the contents of ROS 2 SQLite files. It is currently being used in the [Foxglove Studio app](https://studio.foxglove.dev) to support reading data in this legacy file format. This SQLite format has been superseded by [MCAP](https://mcap.dev).
 
 ## License
 

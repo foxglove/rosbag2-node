@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-conditional-expect */
 import { Rosbag2 } from "@foxglove/rosbag2";
 import { Time, isGreaterThan, isTimeInRangeInclusive } from "@foxglove/rostime";
 import path from "path";
@@ -63,7 +64,7 @@ describe("SqliteNodejs single bag file handling", () => {
     expect(topics[2]!.name).toEqual("/topic");
   });
 
-  it("reads the topic list", async () => {
+  it("reads message counts", async () => {
     const bagFilename = path.join(__dirname, "..", "tests", "bags", "talker", "talker.db3");
     const bag = await openNodejsFile(bagFilename);
 
@@ -133,7 +134,7 @@ describe("SqliteNodejs single bag directory handling", () => {
     expect(topics[2]!.name).toEqual("/topic");
   });
 
-  it("reads the topic list", async () => {
+  it("reads message counts", async () => {
     const bagPath = path.join(__dirname, "..", "tests", "bags", "talker");
     const bag = await openNodejsDirectory(bagPath);
 

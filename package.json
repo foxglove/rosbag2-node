@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@foxglove/rosbag2": "^5.0.0",
-    "better-sqlite3": "^8.1.0"
+    "better-sqlite3": "^11.6.0"
   },
   "packageManager": "yarn@4.5.3"
 }

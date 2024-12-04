@@ -485,7 +485,7 @@ __metadata:
     "@types/better-sqlite3": "npm:^7.6.12"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.1"
-    better-sqlite3: "npm:^8.1.0"
+    better-sqlite3: "npm:^11.6.0"
     eslint: "npm:9.16.0"
     jest: "npm:29.7.0"
     prettier: "npm:3.4.2"
@@ -1603,14 +1603,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "better-sqlite3@npm:8.1.0"
+"better-sqlite3@npm:^11.6.0":
+  version: 11.6.0
+  resolution: "better-sqlite3@npm:11.6.0"
   dependencies:
     bindings: "npm:^1.5.0"
     node-gyp: "npm:latest"
-    prebuild-install: "npm:^7.1.0"
-  checksum: 10c0/813ed58f92c67b85d9590403aa6ed4f50616defee55b9d34e0cff54070a5f907668e68074f96a195ec283b2a81090e8932f9afaccdc8fa432b497160232fb8cd
+    prebuild-install: "npm:^7.1.1"
+  checksum: 10c0/cafa207b40c42624d767a35f24fb16769d106486371b2e23497e9417505fa1fdedd94313b50508bd67f85713a996a0a9134458987c9b80a0a2b243d4db0d1259
   languageName: node
   linkType: hard
 
@@ -4879,9 +4879,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prebuild-install@npm:^7.1.0":
-  version: 7.1.1
-  resolution: "prebuild-install@npm:7.1.1"
+"prebuild-install@npm:^7.1.1":
+  version: 7.1.2
+  resolution: "prebuild-install@npm:7.1.2"
   dependencies:
     detect-libc: "npm:^2.0.0"
     expand-template: "npm:^2.0.3"
@@ -4897,7 +4897,7 @@ __metadata:
     tunnel-agent: "npm:^0.6.0"
   bin:
     prebuild-install: bin.js
-  checksum: 10c0/6dc70f36b0f4adcb2fe0ed38d874ab28b571fb1a9725d769e8ba3f64a15831e58462de09f3e6e64569bcc4a3e03b9328b56faa0d45fe10ae1574478814536c76
+  checksum: 10c0/e64868ba9ef2068fd7264f5b03e5298a901e02a450acdb1f56258d88c09dea601eefdb3d1dfdff8513fdd230a92961712be0676192626a3b4d01ba154d48bdd3
   languageName: node
   linkType: hard
 

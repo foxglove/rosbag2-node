@@ -27,14 +27,15 @@ type TopicRow = {
 };
 
 export class SqliteNodejs implements SqliteDb {
-  readonly filename: string;
+  public readonly filename: string;
+  // eslint-disable-next-line @foxglove/prefer-hash-private
   private context?: DbContext;
 
-  constructor(filename: string) {
+  public constructor(filename: string) {
     this.filename = filename;
   }
 
-  async open(): Promise<void> {
+  public async open(): Promise<void> {
     if (this.context != undefined) {
       return;
     }
@@ -71,21 +72,21 @@ export class SqliteNodejs implements SqliteDb {
     };
   }
 
-  async close(): Promise<void> {
+  public async close(): Promise<void> {
     if (this.context != undefined) {
       this.context.db.close();
       this.context = undefined;
     }
   }
 
-  async readTopics(): Promise<TopicDefinition[]> {
+  public async readTopics(): Promise<TopicDefinition[]> {
     if (this.context == undefined) {
       throw new Error(`Call open() before reading topics`);
     }
     return Array.from(this.context.idToTopic.values());
   }
 
-  readMessages(opts: MessageReadOptions = {}): AsyncIterableIterator<RawMessage> {
+  public readMessages(opts: MessageReadOptions = {}): AsyncIterableIterator<RawMessage> {
     if (this.context == undefined) {
       throw new Error(`Call open() before reading messages`);
     }
@@ -146,7 +147,7 @@ export class SqliteNodejs implements SqliteDb {
     return new RawMessageIterator(iterator, idToTopic);
   }
 
-  async timeRange(): Promise<[min: Time, max: Time]> {
+  public async timeRange(): Promise<[min: Time, max: Time]> {
     if (this.context == undefined) {
       throw new Error(`Call open() before retrieving the time range`);
     }
@@ -157,7 +158,7 @@ export class SqliteNodejs implements SqliteDb {
     return [fromNanoSec(res.start ?? 0n), fromNanoSec(res.end ?? 0n)];
   }
 
-  async messageCounts(): Promise<Map<string, number>> {
+  public async messageCounts(): Promise<Map<string, number>> {
     if (this.context == undefined) {
       throw new Error(`Call open() before retrieving message counts`);
     }

@@ -134,7 +134,7 @@ describe("SqliteNodejs single bag directory handling", () => {
     expect(topics[2]!.name).toEqual("/topic");
   });
 
-  it("message counts", async () => {
+  it("reads message counts", async () => {
     const bagPath = path.join(__dirname, "..", "tests", "bags", "talker");
     const bag = await openNodejsDirectory(bagPath);
 

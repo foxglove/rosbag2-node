@@ -1,7 +1,7 @@
 {
   "name": "@foxglove/rosbag2-node",
-  "version": "4.1.0",
-  "description": "ROS2 (Robot Operating System) bag reader and writer for node.js",
+  "version": "5.0.0",
+  "description": "ROS 2 (Robot Operating System) bag reader and writer for node.js",
   "license": "MIT",
   "keywords": [
     "ros",
@@ -55,7 +55,7 @@
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@foxglove/rosbag2": "^5.0.0",
+    "@foxglove/rosbag2": "github:foxglove/rosbag2#7184cd25ce29d2d551388905d5dc6ca556f07749",
     "better-sqlite3": "^11.6.0"
   },
   "packageManager": "yarn@4.5.3"

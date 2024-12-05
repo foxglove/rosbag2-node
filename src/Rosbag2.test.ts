@@ -26,7 +26,7 @@ describe("SqliteNodejs single bag file handling", () => {
       if (!seenRosout && msg.topic.name === "/rosout") {
         seenRosout = true;
         expect(msg.value).toEqual({
-          stamp: { sec: 1585866235, nsec: 112130688 },
+          stamp: { sec: 1585866235, nanosec: 112130688 },
           level: 20,
           name: "minimal_publisher",
           msg: "Publishing: 'Hello, world! 0'",
@@ -41,6 +41,28 @@ describe("SqliteNodejs single bag file handling", () => {
         expect(msg.data.byteLength).toBe(24);
       }
       prevTime = msg.timestamp;
+    }
+  });
+
+  it("reads messages with sec,nsec time type", async () => {
+    const bagFilename = path.join(__dirname, "..", "tests", "bags", "talker", "talker.db3");
+    const bag = await openNodejsFile(bagFilename, { timeType: "sec,nsec" });
+
+    for await (const msg of bag.readMessages()) {
+      if (msg.topic.name !== "/rosout") {
+        continue;
+      }
+      expect(msg.value).toEqual({
+        stamp: { sec: 1585866235, nsec: 112130688 },
+        level: 20,
+        name: "minimal_publisher",
+        msg: "Publishing: 'Hello, world! 0'",
+        file: "/opt/ros2_ws/eloquent/src/ros2/examples/rclcpp/minimal_publisher/lambda.cpp",
+        function: "operator()",
+        line: 38,
+      });
+      expect(msg.data.byteLength).toBe(176);
+      break;
     }
   });
 
@@ -96,7 +118,7 @@ describe("SqliteNodejs single bag directory handling", () => {
       if (!seenRosout && msg.topic.name === "/rosout") {
         seenRosout = true;
         expect(msg.value).toEqual({
-          stamp: { sec: 1585866235, nsec: 112130688 },
+          stamp: { sec: 1585866235, nanosec: 112130688 },
           level: 20,
           name: "minimal_publisher",
           msg: "Publishing: 'Hello, world! 0'",
@@ -111,6 +133,28 @@ describe("SqliteNodejs single bag directory handling", () => {
         expect(msg.data.byteLength).toBe(24);
       }
       prevTime = msg.timestamp;
+    }
+  });
+
+  it("reads messages with sec,nsec time type", async () => {
+    const bagPath = path.join(__dirname, "..", "tests", "bags", "talker");
+    const bag = await openNodejsDirectory(bagPath, { timeType: "sec,nsec" });
+
+    for await (const msg of bag.readMessages()) {
+      if (msg.topic.name !== "/rosout") {
+        continue;
+      }
+      expect(msg.value).toEqual({
+        stamp: { sec: 1585866235, nsec: 112130688 },
+        level: 20,
+        name: "minimal_publisher",
+        msg: "Publishing: 'Hello, world! 0'",
+        file: "/opt/ros2_ws/eloquent/src/ros2/examples/rclcpp/minimal_publisher/lambda.cpp",
+        function: "operator()",
+        line: 38,
+      });
+      expect(msg.data.byteLength).toBe(176);
+      break;
     }
   });
 

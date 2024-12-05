@@ -488,7 +488,7 @@ __metadata:
   resolution: "@foxglove/rosbag2-node@workspace:."
   dependencies:
     "@foxglove/eslint-plugin": "npm:2.0.0"
-    "@foxglove/rosbag2": "github:foxglove/rosbag2#7184cd25ce29d2d551388905d5dc6ca556f07749"
+    "@foxglove/rosbag2": "npm:^6.0.0"
     "@types/better-sqlite3": "npm:^7.6.12"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.1"
@@ -501,9 +501,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@foxglove/rosbag2@github:foxglove/rosbag2#7184cd25ce29d2d551388905d5dc6ca556f07749":
+"@foxglove/rosbag2@npm:^6.0.0":
   version: 6.0.0
-  resolution: "@foxglove/rosbag2@https://github.com/foxglove/rosbag2.git#commit=7184cd25ce29d2d551388905d5dc6ca556f07749"
+  resolution: "@foxglove/rosbag2@npm:6.0.0"
   dependencies:
     "@foxglove/rosmsg-msgs-common": "npm:^3.2.1"
     "@foxglove/rosmsg2-serialization": "npm:^3.0.0"

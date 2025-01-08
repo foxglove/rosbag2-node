@@ -1,5 +1,8 @@
 # @foxglove/rosbag2-node
 
+> [!IMPORTANT]
+> This package has moved to https://github.com/foxglove/ros-typescript.
+
 > _ROS 2 (Robot Operating System) bag reader and writer for node.js 👜_
 
 [![npm version](https://img.shields.io/npm/v/@foxglove/rosbag2-node.svg?style=flat)](https://www.npmjs.com/package/@foxglove/rosbag2-node)
